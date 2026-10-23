@@ -4,56 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Portfolio PPG Calon Guru - Muhammad Izzul Fahmi</title>
+    
+    <!-- FAVICON LOGO UNEJ -->
+    <link rel="icon" type="image/png" href="assets/logo.png">
 
-    <!-- Tailwind CSS & Google Fonts CDN -->
+    <!-- Tailwind CSS CDN & Google Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+    
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f8fafc;
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #f8fafc; 
         }
-        /* Style Scrollbar Rapi */
-        main::-webkit-scrollbar { width: 6px; }
-        main::-webkit-scrollbar-track { background: transparent; }
-        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
-        main::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Merapikan scrollbar */
+        main::-webkit-scrollbar {
+            width: 6px;
+        }
+        main::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        main::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 99px;
+        }
+        main::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between pt-16 md:pt-20 pb-20 md:pb-6 px-3 sm:px-6">
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between pt-16 md:pt-20 pb-20 md:pb-6 px-2 sm:px-6">
 
-    <!-- CONTAINER HEADER -->
-    <div id="header-placeholder" class="w-full"></div>
+    <!-- ================= NAVBAR ATAS UNIVERSAL ================= -->
+    <header class="fixed top-2 left-0 right-0 z-50 px-2 md:px-6">
+        <div class="max-w-6xl mx-auto bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-sm rounded-xl px-2.5 py-1.5 flex items-center justify-between gap-2">
+            
+            <!-- DERETAN LOGO KIRI -->
+            <div class="flex items-center gap-1.5 shrink-0 cursor-pointer" onclick="switchTab('beranda.html')">
+                <img src="assets/tutwuri.png" alt="Tutwuri" class="h-6 w-auto object-contain" onerror="this.style.display='none'">
+                <img src="assets/logo.png" alt="UNEJ" class="h-6 w-auto object-contain" onerror="this.style.display='none'">
+                <img src="assets/dikti.jpg" alt="Dikti" class="h-6 w-auto object-contain rounded" onerror="this.style.display='none'">
+                <img src="assets/fkip.jpg" alt="FKIP" class="h-6 w-auto object-contain rounded" onerror="this.style.display='none'">
+                <img src="assets/ppg.png" alt="PPG" class="h-6 w-auto object-contain" onerror="this.style.display='none'">
+            </div>
 
-    <!-- MAIN KONTEN PORTFOLIO -->
-    <main id="portfolio-container" class="w-full max-w-5xl mx-auto flex-grow flex items-start justify-center min-h-[calc(100vh-7rem)] max-h-[calc(100vh-7rem)] overflow-y-auto">
-        <!-- Konten dari folder pages/ akan dimuat di sini -->
+            <!-- MENU NAVIGATION DESKTOP -->
+            <nav class="hidden md:flex items-center gap-1 text-xs font-bold shrink-0 whitespace-nowrap overflow-x-auto py-0.5">
+                <button onclick="switchTab('beranda.html')" class="nav-btn px-3 py-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                    Beranda
+                </button>
+                <button onclick="switchTab('profil.html')" class="nav-btn px-3 py-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                    Profil
+                </button>
+                <button onclick="switchTab('pembelajaran.html')" class="nav-btn px-3 py-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                    Pembelajaran
+                </button>
+                <button onclick="switchTab('praktik.html')" class="nav-btn px-3 py-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                    Non-Mengajar
+                </button>
+                <button onclick="switchTab('penilaian.html')" class="nav-btn px-3 py-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                    Penilaian
+                </button>
+                <button onclick="switchTab('refleksi.html')" class="nav-btn px-3 py-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                    Refleksi
+                </button>
+            </nav>
+
+            <!-- TOMBOL ACTION KANAN (FULLSCREEN) -->
+            <div class="flex items-center gap-1 shrink-0">
+                <button type="button" id="btn-fullscreen-toggle" title="Layar Penuh" class="p-1.5 rounded-lg border border-slate-200/80 bg-white text-slate-500 hover:text-blue-600 hover:bg-slate-50 active:scale-95 transition-all cursor-pointer flex items-center justify-center">
+                    <svg id="icon-expand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 block">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                    </svg>
+                    <svg id="icon-collapse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 hidden">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25" />
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ================= BOTTOM BAR KHUSUS HP ================= -->
+    <div class="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-sm">
+        <nav class="bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl rounded-2xl px-2 py-2 flex items-center justify-around gap-1">
+            <button onclick="switchTab('beranda.html')" title="Beranda" class="nav-btn-mobile p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+            </button>
+            <button onclick="switchTab('profil.html')" title="Profil" class="nav-btn-mobile p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+            </button>
+            <button onclick="switchTab('pembelajaran.html')" title="Pembelajaran" class="nav-btn-mobile p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" />
+                </svg>
+            </button>
+            <button onclick="switchTab('praktik.html')" title="Non-Mengajar" class="nav-btn-mobile p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </button>
+            <button onclick="switchTab('penilaian.html')" title="Penilaian" class="nav-btn-mobile p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </button>
+            <button onclick="switchTab('refleksi.html')" title="Refleksi" class="nav-btn-mobile p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                </svg>
+            </button>
+        </nav>
+    </div>
+
+    <!-- MAIN CONTAINER (KONTEN HALAMAN) -->
+    <main id="portfolio-container" class="w-full max-w-6xl mx-auto flex-grow flex items-start justify-center min-h-[calc(100vh-6rem)] max-h-[calc(100vh-6rem)] overflow-y-auto">
+        <!-- File dari folder pages/ akan masuk ke sini via Fetch -->
     </main>
 
-    <!-- LOGIKA SPA SINGLE-PAGE -->
+    <!-- SCRIPT SINGLE PAGE APPLICATION & LOGIKA FULLSCREEN -->
     <script>
-        // 1. Load Header Komponen
-        async function initHeader() {
-            try {
-                const res = await fetch('components/header.html');
-                if (!res.ok) throw new Error("Header tidak ditemukan");
-                document.getElementById('header-placeholder').innerHTML = await res.text();
-                
-                setupFullscreenButton();
-                switchTab('beranda.html'); // Default Halaman Awal
-            } catch (err) {
-                console.error("Gagal memuat header:", err);
-            }
-        }
-
-        // 2. Perpindahan Halaman Tanpa Reload
+        // Load Konten Halaman Tanpa Reload
         async function switchTab(pageFile) {
             const container = document.getElementById('portfolio-container');
             
-            // Tampilan Loading Ringan
+            // Indikator Loading
             container.innerHTML = `
-                <div class="flex flex-col items-center justify-center p-12 space-y-3 text-slate-400">
+                <div class="flex flex-col items-center justify-center p-12 space-y-3 text-slate-400 my-auto">
                     <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -67,77 +149,126 @@
                 if (!res.ok) throw new Error('Halaman tidak ditemukan');
                 
                 container.innerHTML = await res.text();
-                updateHeaderButtons(pageFile);
+                updateNavButtons(pageFile);
                 container.scrollTop = 0;
 
-                // Event Listener Sub-Tab Khusus
-                if (pageFile === 'pembelajaran.html') setupPembelajaranSubTabs();
+                // Event Listener khusus Sub-Tab Pembelajaran
+                if (pageFile === 'pembelajaran.html') {
+                    setupPembelajaranSubTabs();
+                }
             } catch (err) {
                 container.innerHTML = `
-                    <div class="bg-white rounded-2xl p-8 border border-slate-200 text-center w-full shadow-sm space-y-2">
+                    <div class="bg-white rounded-2xl p-8 border border-slate-200 text-center w-full shadow-sm space-y-2 my-auto">
                         <p class="text-slate-700 font-bold">Gagal memuat halaman ${pageFile}</p>
-                        <p class="text-xs text-slate-400">Pastikan file berada di folder pages/ dan struktur URL benar.</p>
+                        <p class="text-xs text-slate-400">Pastikan file berada di folder pages/ dan tidak ada typo nama file.</p>
                     </div>
                 `;
             }
         }
 
-        // 3. Handling Sub-Tab Pembelajaran (Pertemuan 1 / 2)
+        // Binding Event Sub-Tab 3 Pertemuan Pembelajaran
         function setupPembelajaranSubTabs() {
             const btnP1 = document.getElementById('tab-btn-p1');
             const btnP2 = document.getElementById('tab-btn-p2');
-            const p1Content = document.getElementById('content-p1');
-            const p2Content = document.getElementById('content-p2');
+            const btnP3 = document.getElementById('tab-btn-p3');
+            
+            const p1 = document.getElementById('content-p1');
+            const p2 = document.getElementById('content-p2');
+            const p3 = document.getElementById('content-p3');
 
-            if (!btnP1 || !btnP2 || !p1Content || !p2Content) return;
+            if (!btnP1 || !btnP2 || !btnP3 || !p1 || !p2 || !p3) return;
 
-            btnP1.onclick = () => {
-                p1Content.classList.remove('hidden');
-                p2Content.classList.add('hidden');
-                btnP1.className = "w-1/2 py-2 px-4 rounded-xl text-xs md:text-sm font-bold bg-white text-blue-700 shadow-sm border-0 cursor-pointer";
-                btnP2.className = "w-1/2 py-2 px-4 rounded-xl text-xs md:text-sm font-bold text-slate-500 hover:text-slate-800 border-0 cursor-pointer";
+            btnP1.onclick = function() {
+                p1.classList.remove('hidden'); p2.classList.add('hidden'); p3.classList.add('hidden');
+                btnP1.className = "w-1/3 py-2 px-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-blue-700 shadow-sm border-0 cursor-pointer";
+                btnP2.className = "w-1/3 py-2 px-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 border-0 cursor-pointer";
+                btnP3.className = "w-1/3 py-2 px-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 border-0 cursor-pointer";
             };
 
-            btnP2.onclick = () => {
-                p1Content.classList.add('hidden');
-                p2Content.classList.remove('hidden');
-                btnP2.className = "w-1/2 py-2 px-4 rounded-xl text-xs md:text-sm font-bold bg-white text-purple-700 shadow-sm border-0 cursor-pointer";
-                btnP1.className = "w-1/2 py-2 px-4 rounded-xl text-xs md:text-sm font-bold text-slate-500 hover:text-slate-800 border-0 cursor-pointer";
+            btnP2.onclick = function() {
+                p2.classList.remove('hidden'); p1.classList.add('hidden'); p3.classList.add('hidden');
+                btnP2.className = "w-1/3 py-2 px-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-purple-700 shadow-sm border-0 cursor-pointer";
+                btnP1.className = "w-1/3 py-2 px-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 border-0 cursor-pointer";
+                btnP3.className = "w-1/3 py-2 px-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 border-0 cursor-pointer";
+            };
+
+            btnP3.onclick = function() {
+                p3.classList.remove('hidden'); p1.classList.add('hidden'); p2.classList.add('hidden');
+                btnP3.className = "w-1/3 py-2 px-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-amber-700 shadow-sm border-0 cursor-pointer";
+                btnP1.className = "w-1/3 py-2 px-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 border-0 cursor-pointer";
+                btnP2.className = "w-1/3 py-2 px-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 border-0 cursor-pointer";
             };
         }
 
-        // 4. Update Indicator Warna Navbar
-        function updateHeaderButtons(activeFile) {
-            document.querySelectorAll('.tab-btn, .tab-btn-mobile').forEach(btn => {
-                const attr = btn.getAttribute('onclick') || '';
-                const isCurrent = attr.includes(activeFile);
-
-                if (btn.classList.contains('tab-btn')) {
-                    btn.className = isCurrent 
-                        ? "tab-btn px-3.5 py-1.5 rounded-lg bg-blue-600 text-white font-bold shadow-sm transition-all border-0 cursor-pointer"
-                        : "tab-btn px-3.5 py-1.5 rounded-lg text-slate-600 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer";
+        // Update Warna Tombol Aktif Navigasi
+        function updateNavButtons(activeFile) {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                const onclickAttr = btn.getAttribute('onclick') || '';
+                if (onclickAttr.includes(activeFile)) {
+                    btn.className = "nav-btn px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold shadow-sm transition-all border-0 cursor-pointer";
                 } else {
-                    btn.className = isCurrent 
-                        ? "tab-btn-mobile p-2.5 rounded-xl bg-blue-600 text-white shadow-md transition-all border-0 cursor-pointer"
-                        : "tab-btn-mobile p-2.5 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer";
+                    btn.className = "nav-btn px-3 py-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer";
+                }
+            });
+
+            document.querySelectorAll('.nav-btn-mobile').forEach(btn => {
+                const onclickAttr = btn.getAttribute('onclick') || '';
+                if (onclickAttr.includes(activeFile)) {
+                    btn.className = "nav-btn-mobile p-2 rounded-xl bg-blue-600 text-white shadow-md transition-all border-0 cursor-pointer";
+                } else {
+                    btn.className = "nav-btn-mobile p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all border-0 cursor-pointer";
                 }
             });
         }
 
-        // 5. Toggle Layar Penuh (Fullscreen)
+        // Logika Fullscreen
         function setupFullscreenButton() {
-            const btn = document.getElementById('btn-fullscreen-toggle');
-            if (!btn) return;
-            btn.addEventListener('click', () => {
-                if (!document.fullscreenElement) {
-                    document.documentElement.requestFullscreen().catch(() => {});
+            const btnFS = document.getElementById('btn-fullscreen-toggle');
+            if (!btnFS) return;
+
+            btnFS.addEventListener('click', function(e) {
+                e.preventDefault();
+                const doc = document;
+                const docEl = document.documentElement;
+
+                const requestFS = docEl.requestFullscreen || docEl.webkitRequestFullscreen || docEl.mozRequestFullScreen || docEl.msRequestFullscreen;
+                const exitFS = doc.exitFullscreen || doc.webkitExitFullscreen || doc.mozCancelFullScreen || doc.msExitFullscreen;
+                const isFS = doc.fullscreenElement || doc.webkitFullscreenElement || doc.mozFullScreenElement || doc.msFullscreenElement;
+
+                if (!isFS) {
+                    if (requestFS) requestFS.call(docEl);
                 } else {
-                    document.exitFullscreen().catch(() => {});
+                    if (exitFS) exitFS.call(doc);
                 }
             });
         }
 
-        window.addEventListener('DOMContentLoaded', initHeader);
+        // Ikon Fullscreen State
+        function updateFullscreenIcons() {
+            const iconExpand = document.getElementById('icon-expand');
+            const iconCollapse = document.getElementById('icon-collapse');
+            const isFS = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+
+            if (iconExpand && iconCollapse) {
+                if (isFS) {
+                    iconExpand.classList.replace('block', 'hidden');
+                    iconCollapse.classList.replace('hidden', 'block');
+                } else {
+                    iconExpand.classList.replace('hidden', 'block');
+                    iconCollapse.classList.replace('block', 'hidden');
+                }
+            }
+        }
+
+        ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(event => {
+            document.addEventListener(event, updateFullscreenIcons);
+        });
+
+        // Jalankan saat pertama kali dibuka
+        window.addEventListener('DOMContentLoaded', () => {
+            setupFullscreenButton();
+            switchTab('beranda.html');
+        });
     </script>
 </body>
 </html>
